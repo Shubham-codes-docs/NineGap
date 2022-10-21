@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Auth from "./pages/auth/Signup";
+import Dashboard from "./pages/dashboard/Index";
+import authContext from "./store/AuthContext";
 function App() {
-  const [count, setCount] = useState(0);
+  const authCtx = useContext(authContext);
 
   return (
     <>
-      <Auth />
+      <Routes>
+        <Route path="/" element={<Auth />} />
+        <Route
+          path="/dashboard"
+          element={
+            authCtx.token ? (
+              <Dashboard />
+            ) : (
+              <p>Please Login to view this page</p>
+            )
+          }
+        />
+      </Routes>
     </>
   );
 }
